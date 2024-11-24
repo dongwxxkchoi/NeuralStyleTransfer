@@ -4,7 +4,7 @@ import torch.nn.functional as F
 
 # ContentLoss -> MSE between F / P
 class ContentLoss(nn.Module):
-    def __init__(self, x):
+    def __init__(self):
         super(ContentLoss, self).__init__()
 
     def forward(self, x: torch.Tensor, y: torch.Tensor):
@@ -13,7 +13,7 @@ class ContentLoss(nn.Module):
 
 # StyleLoss -> gram matrix
 class StyleLoss(nn.Module):
-    def __init__(self, x):
+    def __init__(self):
         super(StyleLoss, self).__init__()
 
     def gram_matrix(self, x: torch.Tensor):
@@ -27,8 +27,8 @@ class StyleLoss(nn.Module):
 
         b,c,h,w, = x.size()
         # reshape
-        features = x.view(b, c, h*w)
-        features_T = features.transpose(0, 2, 1)
+        features = x.view(b, c, h*w) # (b, N, M)
+        features_T = features.transpose(1, 2) # (b, M, N)
         # matrix multiplication
         G = torch.matmul(features, features_T)
 
