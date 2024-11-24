@@ -7,8 +7,9 @@ class ContentLoss(nn.Module):
     def __init__(self, x):
         super(ContentLoss, self).__init__()
 
-    def forward(self, x, y):
-        pass
+    def forward(self, x: torch.Tensor, y: torch.Tensor):
+        loss = F.mse_loss(x,y)
+        return loss
 
 # StyleLoss -> gram matrix
 class StyleLoss(nn.Module):
